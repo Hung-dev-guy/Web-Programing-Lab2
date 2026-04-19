@@ -1,0 +1,13 @@
+.user-comments-container {
+    padding: 20px;
+}
+
+.comment-paper {
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: background-color 0.2s;
+}
+
+.comment-paper:hover {
+    background-color: #f0f0f0;
+}
