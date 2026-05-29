@@ -16,15 +16,18 @@ import fetchModel from "../../lib/fetchModelData";
 /**
  * Define UserList, a React component of Project 4.
  */
-function UserList () {
+function UserList ({ currentUser }) {
     const [users, setUsers] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
+      if (!currentUser) {
+        return;
+      }
       fetchModel('/user/list')
         .then(data => setUsers(data))
         .catch(error => console.error('Error fetching users:', error));
-    }, []);
+    }, [currentUser]);
 
     const handleUserClick = (userId) => {
       navigate(`/users/${userId}`);
@@ -34,6 +37,10 @@ function UserList () {
       e.stopPropagation(); // Prevent navigating to user detail
       navigate(`/comments/${userId}`);
     };
+
+    if (!currentUser) {
+      return null;
+    }
 
     return (
       <div>

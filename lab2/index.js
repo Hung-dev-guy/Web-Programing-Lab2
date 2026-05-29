@@ -27,7 +27,8 @@ app.use(session({
 function requireLogin(req, res, next) {
   const allowedPaths = [
     '/admin/login',
-    '/admin/logout'
+    '/admin/logout',
+    '/admin/register'
   ];
   
   // Allow POST /user for registration without login

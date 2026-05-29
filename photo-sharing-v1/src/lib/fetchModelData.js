@@ -1,5 +1,11 @@
+import axios from 'axios';
+
+// Configure Axios defaults globally
+axios.defaults.baseURL = 'http://localhost:8082';
+axios.defaults.withCredentials = true;
+
 /**
- * fetchModel - Fetch a model from the web server.
+ * fetchModel - Fetch a model from the web server using Axios.
  *
  * @param {string} url      The URL to issue the GET request.
  *
@@ -7,15 +13,9 @@
  *                          the server, or rejects with an error.
  */
 function fetchModel(url) {
-  // Backend server runs on port 8082
-  const backendUrl = `http://localhost:8082${url}`;
-
-  return fetch(backendUrl)
+  return axios.get(url)
     .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
+      return response.data;
     })
     .catch((error) => {
       console.error('Error fetching model:', error);
