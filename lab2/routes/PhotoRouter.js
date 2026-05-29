@@ -2,6 +2,58 @@ const express = require("express");
 const Photo = require("../db/photoModel");
 const router = express.Router();
 const User = require("../db/userModel");
+const path = require('path');
+const fs = require('fs');
+const multer = require("multer");
+const { v4: uuidv4 } = require("uuid");
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const imagesDir = path.join(__dirname, '../photo-sharing-v1/src/images');
+        if (!fs.existsSync(imagesDir)) {
+            fs.mkdirSync(imagesDir, { recursive: true });
+        }
+        cb(null, imagesDir);
+    },
+    filename: (req, file, cb) => {
+        const uniqueName = `${uuidv4()}${path.extname(file.originalname)}`;
+        cb(null, uniqueName);
+    }
+});
+
+const upload = multer({ storage });
+
+router.post('/photos/new', upload.single('file'), async (req, res) => {
+    if (!req.file) {
+        return res.status(400).send('No file provided');
+    }
+
+    try {
+        if (!req.session || !req.session.user) {
+            return res.status(401).send('User not logged in');
+        }
+
+        const userId = req.session.user._id;
+        const filename = req.file.filename;
+        const creationDate = new Date();
+
+        const newPhoto = new Photo({
+            file_name: filename,
+            user_id: userId,
+            date_time: creationDate
+        });
+
+        await newPhoto.save();
+
+        res.status(200).json({
+            message: 'Photo uploaded successfully',
+            photo: newPhoto
+        });
+    } catch (err) {
+        console.error('Photo upload error:', err);
+        res.status(500).send('Error uploading photo');
+    }
+});
 
 router.get("/:id", async (request, response) => {
     const userId = request.params.id;

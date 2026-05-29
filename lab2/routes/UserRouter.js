@@ -3,7 +3,43 @@ const User = require("../db/userModel");
 const router = express.Router();
 
 router.post("/", async (request, response) => {
-  
+  try {
+    const { login_name, password, first_name, last_name, location, description, occupation } = request.body;
+
+    // Validation: Required fields
+    if (!login_name || !password || !first_name || !last_name) {
+      return response.status(400).send('login_name, password, first_name, and last_name are required');
+    }
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ login_name });
+    if (existingUser) {
+      return response.status(400).send('A user with that login name already exists');
+    }
+
+    // Create new user
+    const newUser = new User({
+      login_name,
+      password,
+      first_name,
+      last_name,
+      location: location || '',
+      description: description || '',
+      occupation: occupation || ''
+    });
+
+    await newUser.save();
+
+    return response.status(201).json({
+      login_name: newUser.login_name,
+      _id: newUser._id,
+      first_name: newUser.first_name,
+      last_name: newUser.last_name
+    });
+  } catch (err) {
+    console.error('Registration error:', err);
+    return response.status(500).send(err.toString());
+  }
 });
 
 router.get("/list", async (request, response) => {

@@ -55,7 +55,9 @@ const im = {
   _id: "57231f1a30e4351f4e9f4bd7",
   first_name: "Ian",
   last_name: "Malcolm",
+  login_name: "imalcolm",
   location: "Austin, TX",
+  password: "chaostheory",
   description: "Should've stayed in the car.",
   occupation: "Mathematician",
 };
@@ -63,7 +65,9 @@ const er = {
   _id: "57231f1a30e4351f4e9f4bd8",
   first_name: "Ellen",
   last_name: "Ripley",
+  login_name: "eripley",
   location: "Nostromo",
+  password: "xenomorph",
   description: "Lvl 6 rating. Pilot.",
   occupation: "Warrant Officer",
 };
@@ -71,7 +75,9 @@ const pt = {
   _id: "57231f1a30e4351f4e9f4bd9",
   first_name: "Peregrin",
   last_name: "Took",
+  login_name: "ptook",
   location: "Gondor",
+  password: "secondbreakfast",
   description:
     "Home is behind, the world ahead... " +
     "And there are many paths to tread. Through shadow, to the edge of night, " +
@@ -83,7 +89,9 @@ const rk = {
   _id: "57231f1a30e4351f4e9f4bda",
   first_name: "Rey",
   last_name: "Kenobi",
+  login_name: "rkenobi",
   location: "D'Qar",
+  password: "scavenger",
   description: "Excited to be here!",
   occupation: "Rebel",
 };
@@ -91,7 +99,9 @@ const al = {
   _id: "57231f1a30e4351f4e9f4bdb",
   first_name: "April",
   last_name: "Ludgate",
+  login_name: "aludgate",
   location: "Pawnee, IN",
+  password: "wookiee",
   description: "Witch",
   occupation: "Animal Control",
 };
@@ -99,7 +109,9 @@ const jo = {
   _id: "57231f1a30e4351f4e9f4bdc",
   first_name: "John",
   last_name: "Ousterhout",
+  login_name: "jousterhout",
   location: "Stanford, CA",
+  password: "cs142",
   description: "<i>CS142!</i>",
   occupation: "Professor",
 };
@@ -372,15 +384,10 @@ const schemaModel = function () {
   return schemaInfo;
 };
 
-const allPhotosModel = function () {
-  return photos;
-};
-
 const models = {
   userListModel: userListModel,
   userModel: userModel,
   photoOfUserModel: photoOfUserModel,
-  allPhotosModel: allPhotosModel,
   schemaInfo: schemaModel,
 };
 

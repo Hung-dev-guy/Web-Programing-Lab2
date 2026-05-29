@@ -27,6 +27,7 @@ async function dbLoad() {
     userObj = new User({
       first_name: user.first_name,
       last_name: user.last_name,
+      login_name: user.login_name,
       location: user.location,
       description: user.description,
       occupation: user.occupation,
